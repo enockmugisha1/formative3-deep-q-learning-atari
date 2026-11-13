@@ -83,20 +83,45 @@ Random agent reward over 500 steps: 2.0
 
 ## DQN Architecture
 
-*To be completed by the team member responsible for Task 2.*
+### Q-network (CNN)
 
-- Q-network (CNN) layers and sizes
-- Diagram of the network architecture
-- Online and target network setup
+The Q-network takes the stack of 4 preprocessed frames and outputs one Q-value per action. We implemented it ourselves with `torch.nn` (no pretrained models), following the classic DQN architecture:
+
+```mermaid
+graph LR
+    A["Input<br/>4 x 84 x 84<br/>(4 stacked frames)"] --> B["Conv2d<br/>32 filters, 8x8, stride 4<br/>+ ReLU"]
+    B --> C["Conv2d<br/>64 filters, 4x4, stride 2<br/>+ ReLU"]
+    C --> D["Conv2d<br/>64 filters, 3x3, stride 1<br/>+ ReLU"]
+    D --> E["Flatten<br/>64 x 7 x 7 = 3136"]
+    E --> F["Linear 3136 -> 512<br/>+ ReLU"]
+    F --> G["Linear 512 -> 4<br/>(one Q-value per action)"]
+```
+
+| Layer | Output shape | Purpose |
+|-------|--------------|---------|
+| Input (pixels scaled to 0–1) | 4 × 84 × 84 | Last 4 frames, so the network can see motion |
+| Conv 32 filters, 8×8, stride 4 + ReLU | 32 × 20 × 20 | Detect large shapes (paddle, walls) |
+| Conv 64 filters, 4×4, stride 2 + ReLU | 64 × 9 × 9 | Detect smaller patterns (ball, bricks) |
+| Conv 64 filters, 3×3, stride 1 + ReLU | 64 × 7 × 7 | Combine features |
+| Flatten + Linear 3136 → 512 + ReLU | 512 | Mix all spatial features together |
+| Linear 512 → 4 | 4 | Q-value for NOOP, FIRE, RIGHT, LEFT |
+
+### Online and target networks
+
+We keep **two copies** of this network:
+
+- The **online network** picks actions and is trained on every update.
+- The **target network** is a frozen copy used only to compute the Bellman targets. Every 1,000 steps we copy the online weights into it. Without this, the target would move on every update and training becomes unstable.
 
 ## Training Process
 
-*To be completed by the team member responsible for Task 2.*
+Training runs in `train.py` (`uv run python train.py`). Hyperparameters are constants at the top of the file, so each experiment in Task 3 only needs those values changed.
 
-- Replay buffer
-- ε-greedy action selection and decay schedule
-- Bellman target and loss function
-- Target network update frequency
+1. **Replay buffer** — every step, the transition `(state, action, reward, next_state, done)` is stored in a buffer holding the last 20,000 experiences. Training samples random batches from it, which breaks the correlation between consecutive frames.
+2. **ε-greedy action selection** — with probability ε the agent takes a random action (exploration), otherwise it takes the action with the highest Q-value from the online network (exploitation). ε decays **linearly** from 1.0 to 0.05 over the first 100,000 steps, so the agent explores a lot early and exploits what it learned later.
+3. **Bellman target and loss** — for each sampled transition, the online network predicts `Q(state, action)`, and the target is computed with the Bellman equation using the target network: `target = reward + γ · max_a Q_target(next_state, a)` (the future term is dropped when the episode ended). The loss between prediction and target is the Huber loss (`SmoothL1Loss`), and the online network is updated by backpropagation with the Adam optimizer. Learning starts after 5,000 warm-up steps, with one update every 4 environment steps.
+4. **Target network update** — every 1,000 steps the online weights are copied into the target network.
+5. **Logging and saving** — every episode's length, total steps, reward, and ε are printed and written to `plots/training_log.csv`; a reward curve is saved to `plots/training_rewards.png`; the model is saved to `dqn_model.pth` every 10,000 steps and at the end.
 
 ## Hyperparameter Experiments
 
