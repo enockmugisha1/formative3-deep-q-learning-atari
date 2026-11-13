@@ -18,16 +18,16 @@ whether learning was stable or diverged).
 
 | Experiment | Learning rate | Gamma | Batch size | Epsilon start | Epsilon end | Epsilon decay | Observed behaviour |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|---|
-| 1  | 0.0001 | 0.99  | 32 | 1.0 | 0.05 | 100,000 | _Baseline — fill in after run_ |
-| 2  | 0.0005 | 0.99  | 32 | 1.0 | 0.05 | 100,000 | _Higher learning rate — fill in after run_ |
-| 3  | 0.00005| 0.99  | 32 | 1.0 | 0.05 | 100,000 | _Lower learning rate — fill in after run_ |
-| 4  | 0.0001 | 0.95  | 32 | 1.0 | 0.05 | 100,000 | _Lower discount (shorter horizon) — fill in after run_ |
-| 5  | 0.0001 | 0.999 | 32 | 1.0 | 0.05 | 100,000 | _Higher discount (longer horizon) — fill in after run_ |
-| 6  | 0.0001 | 0.99  | 64 | 1.0 | 0.05 | 100,000 | _Larger batch — fill in after run_ |
-| 7  | 0.0001 | 0.99  | 16 | 1.0 | 0.05 | 100,000 | _Smaller batch — fill in after run_ |
-| 8  | 0.0001 | 0.99  | 32 | 1.0 | 0.05 | 50,000  | _Faster epsilon decay — fill in after run_ |
-| 9  | 0.0001 | 0.99  | 32 | 1.0 | 0.10 | 200,000 | _Slower decay, higher exploration floor — fill in after run_ |
-| 10 | 0.0001 | 0.99  | 32 | 0.5 | 0.01 | 75,000  | _Less early exploration — fill in after run_ |
+| 1  | 0.0001 | 0.99  | 32 | 1.0 | 0.05 | 100,000 | Stable baseline; settled ~11.2, best 26. |
+| 2  | 0.0005 | 0.99  | 32 | 1.0 | 0.05 | 100,000 | Diverged — LR too high; reward collapsed to ~0.85, agent died instantly (most episodes, 641). |
+| 3  | 0.00005| 0.99  | 32 | 1.0 | 0.05 | 100,000 | Learned but slowly (LR too low); only reached ~4.25. |
+| 4  | 0.0001 | 0.95  | 32 | 1.0 | 0.05 | 100,000 | Short-sighted (low γ); underperformed baseline at ~7.3. |
+| 5  | 0.0001 | 0.999 | 32 | 1.0 | 0.05 | 100,000 | Slow credit assignment (high γ); ~6.35, below baseline. |
+| 6  | 0.0001 | 0.99  | 64 | 1.0 | 0.05 | 100,000 | Matched baseline (~11.6); larger batch gave stable gradients. |
+| 7  | 0.0001 | 0.99  | 16 | 1.0 | 0.05 | 100,000 | Noisier small-batch gradients; weaker at ~5.75. |
+| 8  | 0.0001 | 0.99  | 32 | 1.0 | 0.05 | 50,000  | Best run — fast ε-decay let it exploit sooner; settled ~14.75, best 40. |
+| 9  | 0.0001 | 0.99  | 32 | 1.0 | 0.10 | 200,000 | Over-explored (slow decay + 0.1 floor); capped at ~6.85. |
+| 10 | 0.0001 | 0.99  | 32 | 0.5 | 0.01 | 75,000  | Low ε-start aided early exploitation; solid ~8.15. |
 
 ## How each experiment isolates a hyperparameter
 
