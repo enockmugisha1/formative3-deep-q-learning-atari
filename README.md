@@ -6,10 +6,11 @@ This project implements a Deep Q-Network (DQN) agent from scratch using PyTorch 
 
 ## Group Members
 
-- [Name 1]: Task 1, environment setup and README environment section
-- [Name 2]: Task 2, `train.py`
-- [Name 3]: Task 3, hyperparameter experiments
-- [Name 4]: Task 4, `play.py`
+Our group has three members; every member also ran their own 10 hyperparameter experiments (Task 3).
+
+- **Enock Mugisha** — Task 1: environment selection, preprocessing pipeline, and verification (`check_env.py`); experiments set C.
+- **Jeremie Iyamurinze** — Task 2: DQN training script (`train.py`); experiments set B (produced the group's best model, `dqn_model.pth`).
+- **Eldrige** — Task 3 harness (`experiments.py`) and Task 4: evaluation script (`play.py`); experiments set A.
 
 See `Task allocation sheet.pdf` for full responsibilities.
 
@@ -125,15 +126,31 @@ Training runs in `train.py` (`uv run python train.py`). Hyperparameters are cons
 
 ## Hyperparameter Experiments
 
-*To be completed by the team member responsible for Task 3.*
+Each member ran 10 experiments of 150,000 steps each, using a distinct config set defined in `experiments.py` so no combination repeats across members. Full tables with per-experiment observations:
 
-Each member's results are in `[Name]Hyperparameter_experiment_results.md`. Models are stored in `models/[name]/`, and training plots are in `plots/`.
+- [`EldrigeHyperparameter_experiment_results.md`](EldrigeHyperparameter_experiment_results.md) — set A (learning rate family around 1e-4)
+- [`JeremieHyperparameter_experiment_results.md`](JeremieHyperparameter_experiment_results.md) — set B (around 2.5e-4, larger batches)
+- [`EnockHyperparameter_experiment_results.md`](EnockHyperparameter_experiment_results.md) — set C (low learning rate 5e-5, gamma/batch extremes)
+
+Per-experiment models live in `models/<member>/expNN.pth` (with a `summary.csv` per member), and reward curves/logs in `plots/<member>/`.
+
+**Key findings across all 30 experiments:** learning rate and gamma mattered most — a too-high learning rate (1e-3) destabilised training and a low gamma (0.90) made the agent too short-sighted for Breakout's delayed rewards, while batch size had only a mild effect. The best model overall was Jeremie's experiment 8 (**lr 0.00025, gamma 0.99, batch 64, ε 1.0 → 0.05 over 75k steps**), reaching a final-20-episode mean reward of **17.1** (random play scores ~1–2). Its weights are the group's final `dqn_model.pth`, and its reward curve is `plots/training_rewards.png`.
 
 ## Gameplay Demonstration
 
-*To be completed by the team member responsible for Task 4.*
+Watch the trained agent play live:
 
-- Video of the best trained agent playing Breakout (`play.py`)
+```bash
+uv run python play.py                  # loads dqn_model.pth, renders the game window
+uv run python play.py --episodes 5     # play more episodes
+```
+
+The agent runs in evaluation mode and always picks the action with the highest predicted Q-value (greedy, no exploration).
+
+Video of the best trained agent playing Breakout:
+
+<!-- VIDEO: drag-and-drop the screen recording (.mov) here in the GitHub README editor -->
+*(video to be added)*
 
 ## Repository Contents
 
