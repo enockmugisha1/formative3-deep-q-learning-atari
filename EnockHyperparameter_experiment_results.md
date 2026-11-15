@@ -22,7 +22,7 @@ reward, final 20-episode mean, whether learning was stable or diverged).
 | 2  | 0.00005 | 0.99 | 128 | 1 | 0.05 | 100,000 | _(not run — batch 128 was prohibitively slow on this CPU-only machine)_ |
 | 3  | 0.00005 | 0.9 | 32 | 1 | 0.05 | 100,000 | **Run (150k steps, 678 episodes). Best 12, final-20 mean 2.0.** Learned, but noticeably slower and plateaued lower than exp 1 (quintile means 1.20 → 1.04 → 1.11 → 1.49 → 2.10). The lower discount factor (γ=0.90) shortens the reward horizon to ~10 steps, so the agent struggles to credit the delayed reward of breaking a brick several frames after the paddle moves — it behaves more myopically. **Worst of my two runs; γ was the harmful change.** |
 | 4  | 0.00005 | 0.95 | 32 | 1 | 0.05 | 150,000 | _(fill after run)_ |
-| 5  | 0.00005 | 0.999 | 32 | 1 | 0.05 | 100,000 | _(fill after run)_ |
+| 5  | 0.00005 | 0.999 | 32 | 1 | 0.05 | 100,000 | **Run (150k steps, 647 episodes). Best 21, final-20 mean 5.2.** Quintile means 1.43 → 1.19 → 1.94 → 2.4 → 4.28 (rising learning curve). |
 | 6  | 0.00005 | 0.99 | 64 | 1 | 0.1 | 200,000 | _(fill after run)_ |
 | 7  | 0.00005 | 0.99 | 32 | 1 | 0.02 | 75,000 | _(fill after run)_ |
 | 8  | 0.00005 | 0.99 | 32 | 0.5 | 0.05 | 100,000 | _(fill after run)_ |
