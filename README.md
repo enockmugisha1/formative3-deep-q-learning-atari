@@ -51,7 +51,7 @@ Rewards are given when the ball breaks a brick. The points depend on the colour 
 The project uses [uv](https://docs.astral.sh/uv/) for dependency management.
 
 ```bash
-git clone https://github.com/enockmugisha1/formative3-dqn-atari.git
+git clone https://github.com/enockmugisha1/formative3-deep-q-learning-atari.git
 cd formative3-dqn-atari
 uv sync
 uv run python check_env.py
@@ -147,10 +147,11 @@ uv run python play.py --episodes 5     # play more episodes
 
 The agent runs in evaluation mode and always picks the action with the highest predicted Q-value (greedy, no exploration).
 
-Video of the best trained agent playing Breakout:
+Video of the best trained agent playing Breakout: [`video/deep-q-n-atari-demo.mov`](video/deep-q-n-atari-demo.mov)
 
-<!-- VIDEO: drag-and-drop the screen recording (.mov) here in the GitHub README editor -->
-*(video to be added)*
+https://github.com/enockmugisha1/formative3-deep-q-learning-atari/raw/main/video/deep-q-n-atari-demo.mov
+
+> The recording shows the agent (loaded from `dqn_model.pth`) playing in evaluation mode. If the player above does not appear, click the link to download the `.mov`.
 
 ## Repository Contents
 
@@ -162,5 +163,6 @@ Video of the best trained agent playing Breakout:
 | `dqn_model.pth` | Final trained model |
 | `models/[name]/` | Each member's saved experiment models |
 | `plots/` | Training plots |
+| `video/` | Gameplay demonstration recording (Task 4) |
 | `Task allocation sheet.pdf` | Group task allocation |
 | `Presentation booking.pdf` | Presentation slot booking |
