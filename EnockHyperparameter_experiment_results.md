@@ -23,7 +23,7 @@ reward, final 20-episode mean, whether learning was stable or diverged).
 | 3  | 0.00005 | 0.9 | 32 | 1 | 0.05 | 100,000 | **Run (150k steps, 678 episodes). Best 12, final-20 mean 2.0.** Learned, but noticeably slower and plateaued lower than exp 1 (quintile means 1.20 → 1.04 → 1.11 → 1.49 → 2.10). The lower discount factor (γ=0.90) shortens the reward horizon to ~10 steps, so the agent struggles to credit the delayed reward of breaking a brick several frames after the paddle moves — it behaves more myopically. **Worst of my two runs; γ was the harmful change.** |
 | 4  | 0.00005 | 0.95 | 32 | 1 | 0.05 | 150,000 | **Run (150k steps, 722 episodes). Best 13, final-20 mean 2.75.** Quintile means 1.15 → 1.56 → 1.16 → 1.43 → 2.68 (rising learning curve). |
 | 5  | 0.00005 | 0.999 | 32 | 1 | 0.05 | 100,000 | **Run (150k steps, 647 episodes). Best 21, final-20 mean 5.2.** Quintile means 1.43 → 1.19 → 1.94 → 2.4 → 4.28 (rising learning curve). |
-| 6  | 0.00005 | 0.99 | 64 | 1 | 0.1 | 200,000 | _(fill after run)_ |
+| 6  | 0.00005 | 0.99 | 64 | 1 | 0.1 | 200,000 | **Run (150k steps, 657 episodes). Best 13, final-20 mean 5.5.** Quintile means 1.43 → 1.42 → 1.83 → 3.23 → 4.19 (rising learning curve). |
 | 7  | 0.00005 | 0.99 | 32 | 1 | 0.02 | 75,000 | **Run (150k steps, 593 episodes). Best 12, final-20 mean 4.5.** Quintile means 1.46 → 1.39 → 1.42 → 2.75 → 4.45 (rising learning curve). |
 | 8  | 0.00005 | 0.99 | 32 | 0.5 | 0.05 | 100,000 | **Run (150k steps, 585 episodes). Best 25, final-20 mean 5.4.** Quintile means 1.19 → 1.5 → 2.37 → 3.56 → 4.72 (rising learning curve). |
 | 9  | 0.00005 | 0.97 | 32 | 1 | 0.05 | 50,000 | **Run (150k steps, 561 episodes). Best 13, final-20 mean 6.8.** Quintile means 1.32 → 0.91 → 2.74 → 2.85 → 5.15 (rising learning curve). |
