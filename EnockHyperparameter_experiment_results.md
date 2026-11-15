@@ -27,7 +27,7 @@ reward, final 20-episode mean, whether learning was stable or diverged).
 | 7  | 0.00005 | 0.99 | 32 | 1 | 0.02 | 75,000 | **Run (150k steps, 593 episodes). Best 12, final-20 mean 4.5.** Quintile means 1.46 → 1.39 → 1.42 → 2.75 → 4.45 (rising learning curve). |
 | 8  | 0.00005 | 0.99 | 32 | 0.5 | 0.05 | 100,000 | **Run (150k steps, 585 episodes). Best 25, final-20 mean 5.4.** Quintile means 1.19 → 1.5 → 2.37 → 3.56 → 4.72 (rising learning curve). |
 | 9  | 0.00005 | 0.97 | 32 | 1 | 0.05 | 50,000 | **Run (150k steps, 561 episodes). Best 13, final-20 mean 6.8.** Quintile means 1.32 → 0.91 → 2.74 → 2.85 → 5.15 (rising learning curve). |
-| 10 | 0.00005 | 0.995 | 16 | 0.8 | 0.01 | 150,000 | _(fill after run)_ |
+| 10 | 0.00005 | 0.995 | 16 | 0.8 | 0.01 | 150,000 | **Run (150k steps, 696 episodes). Best 11, final-20 mean 3.35.** Quintile means 1.22 → 1.29 → 1.72 → 2.39 → 2.56 (rising learning curve). |
 
 ## Metrics to report per run (from `summary.csv`)
 
